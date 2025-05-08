@@ -25,6 +25,7 @@ class Post(models.Model):
 
     class Meta:
         default_related_name = 'posts'
+        ordering = ('-pub_date',)
 
     def __str__(self):
         return self.text[:MAX_TEXT_LENGTH_IN_STR]
@@ -48,6 +49,21 @@ class Follow(models.Model):
                              related_name='subscribes')
     following = models.ForeignKey(User, on_delete=models.CASCADE,
                                   related_name='followers')
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'following'],
+                name='unique_subscribe',
+                violation_error_message='Такая подписка уже существует!',
+            ),
+            models.CheckConstraint(
+                check=~models.Q(user=models.F('following')),
+                name='following_is_not_user',
+                violation_error_message=(
+                    'Поля "user" и "following" должны различаться!'),
+            ),
+        ]
 
     def __str__(self):
         return f'{self.user.username} подписан на {self.following.username}.'

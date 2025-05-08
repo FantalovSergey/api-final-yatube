@@ -50,3 +50,12 @@ python manage.py runserver
 
 # Запросы к API
 Полный список типовых запросов к API и ответов на эти запросы можно получить после запуска проекта, перейдя по ссылке http://127.0.0.1:8000/redoc/.
+
+# Стек
+- Python 3.12.7
+- Django REST framework
+- djoser
+- pytest-django
+
+# Об авторе
+Студент факультета Бэкенд платформы Яндекс.Практикум [Фанталов Сергей](https://github.com/FantalovSergey).
